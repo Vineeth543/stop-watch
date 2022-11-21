@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -36,12 +37,12 @@ body {
 }
 
 .stop-watch-display {
-  width: 30px;
   display: flex;
   justify-content: center;
   color: rgb(5, 75, 101);
   padding: 40px;
   font-size: 50px;
+  font-family: "Fragment Mono";
 }
 
 .stop-watch-controls {
