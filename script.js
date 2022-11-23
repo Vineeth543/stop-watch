@@ -1,4 +1,4 @@
-let t;
+let timer;
 let timerRunning = false;
 
 const startTimer = () => {
@@ -10,7 +10,7 @@ const startTimer = () => {
     let h = Number.parseInt(hour.innerHTML);
     let m = Number.parseInt(minute.innerHTML);
     let s = Number.parseInt(second.innerHTML);
-    let timer = setInterval(() => {
+    timer = setInterval(() => {
       s++;
       if (s == 60) {
         m++;
@@ -27,17 +27,16 @@ const startTimer = () => {
       minute.innerHTML = m < 10 ? "0" + m : m;
       second.innerHTML = s < 10 ? "0" + s : s;
     }, 1000);
-    t = timer;
   }
 };
 
 const pauseTimer = () => {
-  clearInterval(t);
+  clearInterval(timer);
   timerRunning = false;
 };
 
 const resetTimer = () => {
-  clearInterval(t);
+  clearInterval(timer);
   timerRunning = false;
   hour.innerHTML = minute.innerHTML = second.innerHTML = "00";
 };

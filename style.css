@@ -5,9 +5,11 @@
 }
 
 body {
-  background: rgb(68, 68, 244);
+  background: #0867d2;
+  height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .stop-watch-container {
@@ -17,8 +19,6 @@ body {
   align-items: center;
   gap: 60px;
   padding: 50px;
-  position: absolute;
-  top: 25%;
   border-radius: 5px;
 }
 
@@ -51,10 +51,7 @@ body {
 }
 
 .stop-watch-button {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 30px;
-  padding-left: 30px;
+  padding: 10px 30px 10px 30px;
   font-size: 20px;
   font-weight: bold;
   color: white;
@@ -64,13 +61,37 @@ body {
 }
 
 #pause {
-  background: blue;
+  background: rgb(0, 0, 255);
+}
+
+#pause:hover {
+  background: rgb(0, 0, 161);
+}
+
+#pause:focus {
+  outline: 4px solid rgb(111, 111, 214);
 }
 
 #start {
-  background: red;
+  background: rgb(253, 0, 0);
+}
+
+#start:hover {
+  background: rgb(160, 1, 1);
+}
+
+#start:focus {
+  outline: 4px solid rgb(219, 114, 114);
 }
 
 #reset {
-  background: green;
+  background: rgb(22, 215, 22);
+}
+
+#reset:hover {
+  background: rgb(6, 130, 6);
+}
+
+#reset:focus {
+  outline: 4px solid rgb(94, 206, 94);
 }
