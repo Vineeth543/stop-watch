@@ -1,24 +1,60 @@
-@import url("https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap");
+/******************* Importing google fonts *******************/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 * {
   margin: 0;
   padding: 0;
 }
 
-body {
-  background: #0867d2;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/******************* Remove Scroll-bar from number input tag *******************/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
-.stop-watch-container {
-  background: white;
+body {
+  background: url("./images/watch.webp");
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 60px;
-  padding: 30px 30px 55px;
+}
+
+.logo-container {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  left: 50px;
+  top: 50px;
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+}
+
+.heading {
+  color: white;
+  font-family: "Pacifico";
+  font-size: 90px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+/******************* Main Stop Watch *******************/
+.stop-watch-container {
+  background: linear-gradient(
+    rgba(88, 72, 72, 0.72) 0%,
+    rgba(62, 51, 51, 0.45) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
   border-radius: 7px;
 }
 
@@ -27,23 +63,47 @@ body {
   gap: 10px;
   justify-content: center;
   align-items: center;
-  box-shadow: 1px 1px 5px 5px lightblue;
-  border-radius: 6px;
+  margin-bottom: 25px;
+  color: white;
 }
 
-.colon {
+.stop-watch-digit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  font-size: 35px;
+  font-family: "Poppins", "sans-serif";
+}
+
+.stop-watch-colon {
   font-size: 50px;
-  padding-bottom: 8px;
-  color: rgb(0, 115, 154);
+  padding-top: 28px;
+}
+
+.stop-watch-direction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 45px 0 0 20px;
 }
 
 .stop-watch-display {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  width: 120px;
   display: flex;
   justify-content: center;
-  color: rgb(0, 115, 154);
-  padding: 40px;
-  font-size: 50px;
-  font-family: "Fragment Mono";
+  font-size: 100px;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 10px 10px 8px 10px rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  padding: 0 30px;
+  color: white;
 }
 
 .stop-watch-controls {
@@ -52,47 +112,180 @@ body {
 }
 
 .stop-watch-button {
-  padding: 10px 30px 10px 30px;
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
+  width: 60px;
+  height: 60px;
+  background: white;
   border: none;
-  cursor: pointer;
   border-radius: 5px;
 }
 
-#pause {
-  background: rgb(0, 0, 255);
+.stop-watch-direction-button {
+  width: 30px;
+  height: 30px;
+  background: rgb(119, 115, 115);
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }
 
-#pause:hover {
-  background: rgb(0, 0, 161);
+#up {
+  background: white;
 }
 
-#pause:focus {
-  outline: 4px solid rgb(111, 111, 214);
+/******************* Sub Stop Watch *******************/
+.sub-stop-watch-container {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.sub-stop-watch {
+  position: relative;
+  background: linear-gradient(
+    rgba(88, 72, 72, 0.72) 0%,
+    rgba(62, 51, 51, 0.45) 100%
+  );
+  height: 250px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+}
+
+.sub-stop-watch-screen {
+  display: none;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+  padding-bottom: 20px;
+  color: white;
+}
+
+.sub-stop-watch-digit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  font-size: 35px;
+  font-family: "Poppins", sans-serif;
+}
+
+.sub-stop-watch-colon {
+  font-size: 30px;
+  padding-top: 30px;
+}
+
+.sub-stop-watch-display {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 10px 10px 8px 10px rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+  padding: 0 10px;
+  color: white;
+}
+
+.sub-stop-watch-controls {
+  display: none;
+  justify-content: center;
+  gap: 20px;
+}
+
+.sub-stop-watch-button {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border: none;
+  border-radius: 5px;
 }
 
 #start {
-  background: rgb(253, 0, 0);
+  background-image: url("./images/play.svg");
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
 }
 
-#start:hover {
-  background: rgb(160, 1, 1);
-}
-
-#start:focus {
-  outline: 4px solid rgb(219, 114, 114);
+#pause {
+  background-image: url("./images/stop.svg");
+  background-position: center;
+  background-size: cover;
+  cursor: not-allowed;
 }
 
 #reset {
-  background: rgb(22, 215, 22);
+  background-image: url("./images/reset.svg");
+  background-position: center;
+  background-size: cover;
+  cursor: not-allowed;
 }
 
-#reset:hover {
-  background: rgb(6, 130, 6);
+#add {
+  background-image: url("./images/add.svg");
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
 }
 
-#reset:focus {
-  outline: 4px solid rgb(94, 206, 94);
+#up {
+  background-image: url("./images/arrow.svg");
+  background-position: center;
+  background-size: cover;
+}
+
+#down {
+  background-image: url("./images/arrow.svg");
+  background-position: center;
+  background-size: cover;
+  transform: rotate(180deg);
+}
+
+#circle {
+  height: 150px;
+  width: 150px;
+  background-image: url("./images/circle.svg");
+  background-position: center;
+  background-size: cover;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#close {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 40px;
+  width: 40px;
+  background-image: url("./images/close.svg");
+  background-position: center;
+  background-size: cover;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#sub-start {
+  background-image: url("./images/play.svg");
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+}
+
+#sub-reset {
+  background-image: url("./images/reset.svg");
+  background-position: center;
+  background-size: cover;
+  cursor: not-allowed;
 }
