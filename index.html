@@ -9,19 +9,188 @@
     <script src="script.js"></script>
   </head>
   <body>
-    <div class="stop-watch-container">
+    <div class="logo-container">
+      <img src="./images/logo.jpg" alt="logo" class="logo" width="100px" />
+    </div>
+    <h1 class="heading">PRO Timer</h1>
+    <form class="stop-watch-container">
       <div class="stop-watch-screen">
-        <h3 class="stop-watch-display" id="hour">00</h3>
-        <h3 class="colon">:</h3>
-        <h3 class="stop-watch-display" id="minute">00</h3>
-        <h3 class="colon">:</h3>
-        <h3 class="stop-watch-display" id="second">00</h3>
+        <div class="stop-watch-digit">
+          <h6>Hours</h6>
+          <input
+            type="number"
+            oninput="this.value = this.value.length > 2 ? this.value.slice(0, 2) : this.value"
+            value="00"
+            min="00"
+            max="23"
+            id="hour"
+            class="stop-watch-display"
+            readonly
+          />
+        </div>
+        <h6 class="stop-watch-colon">:</h6>
+        <div class="stop-watch-digit">
+          <h6>Minutes</h6>
+          <input
+            type="number"
+            oninput="this.value = this.value.length > 2 ? this.value.slice(0, 2) : this.value"
+            value="00"
+            min="00"
+            max="59"
+            id="minute"
+            class="stop-watch-display"
+            readonly
+          />
+        </div>
+        <h6 class="stop-watch-colon">:</h6>
+        <div class="stop-watch-digit">
+          <h6>Seconds</h6>
+          <input
+            type="number"
+            oninput="this.value = this.value.length > 2 ? this.value.slice(0, 2) : this.value"
+            value="00"
+            min="00"
+            max="59"
+            id="second"
+            class="stop-watch-display"
+            readonly
+          />
+        </div>
+        <h6 class="stop-watch-colon">:</h6>
+        <div class="stop-watch-digit">
+          <h6>Milli Seconds</h6>
+          <input
+            type="number"
+            oninput="this.value = this.value.length > 2 ? this.value.slice(0, 2) : this.value"
+            value="00"
+            min="00"
+            max="99"
+            id="millisecond"
+            class="stop-watch-display"
+            readonly
+          />
+        </div>
+        <div class="stop-watch-direction">
+          <button
+            type="button"
+            class="stop-watch-direction-button"
+            id="up"
+            onclick="forwardTimer()"
+            title="Forward Timer"
+          ></button>
+          <button
+            type="button"
+            class="stop-watch-direction-button"
+            id="down"
+            onclick="backwardTimer()"
+            title="Backward Timer"
+          ></button>
+        </div>
       </div>
       <div class="stop-watch-controls">
-        <button class="stop-watch-button" id="pause" onclick="pauseTimer()">Pause</button>
-        <button class="stop-watch-button" id="start" onclick="startTimer()">Start</button>
-        <button class="stop-watch-button" id="reset" onclick="resetTimer()">Reset</button>
+        <button
+          type="button"
+          class="stop-watch-button"
+          id="start"
+          onclick="startTimer()"
+          title="Start"
+        ></button>
+        <button
+          type="button"
+          class="stop-watch-button"
+          id="pause"
+          onclick="pauseTimer()"
+          title="Stop"
+        ></button>
+        <button
+          type="button"
+          class="stop-watch-button"
+          id="reset"
+          onclick="resetTimer()"
+          title="Reset"
+        ></button>
+        <button
+          type="button"
+          class="stop-watch-button"
+          id="add"
+          onclick="addTimer()"
+          title="Set Time"
+        ></button>
       </div>
+    </form>
+    <div class="sub-stop-watch-container">
+      <div class="sub-stop-watch"></div>
+      <div class="sub-stop-watch">
+        <button
+          type="button"
+          id="circle"
+          title="Open"
+          onclick="showSubTimer()"
+        ></button>
+        <button
+          type="button"
+          id="close"
+          title="Close"
+          onclick="hideSubTimer()"
+        ></button>
+        <div class="sub-stop-watch-screen" id="sub-watch-screen">
+          <div class="sub-stop-watch-digit">
+            <h6>H</h6>
+            <input
+              type="number"
+              value="00"
+              min="00"
+              max="23"
+              id="sub-hour"
+              class="sub-stop-watch-display"
+              readonly
+            />
+          </div>
+          <h6 class="sub-stop-watch-colon">:</h6>
+          <div class="sub-stop-watch-digit">
+            <h6>M</h6>
+            <input
+              type="number"
+              value="00"
+              min="00"
+              max="59"
+              id="sub-minute"
+              class="sub-stop-watch-display"
+              readonly
+            />
+          </div>
+          <h6 class="sub-stop-watch-colon">:</h6>
+          <div class="sub-stop-watch-digit">
+            <h6>S</h6>
+            <input
+              type="number"
+              value="00"
+              min="00"
+              max="59"
+              id="sub-second"
+              class="sub-stop-watch-display"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="sub-stop-watch-controls" id="sub-watch-control">
+          <button
+            type="button"
+            class="sub-stop-watch-button"
+            id="sub-start"
+            onclick="startSubTimer()"
+            title="Start"
+          ></button>
+          <button
+            type="button"
+            class="sub-stop-watch-button"
+            id="sub-reset"
+            onclick="resetSubTimer()"
+            title="Reset"
+          ></button>
+        </div>
+      </div>
+      <div class="sub-stop-watch"></div>
     </div>
   </body>
 </html>
