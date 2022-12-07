@@ -1,134 +1,59 @@
-let timer, subTimer;
-let timerRunning = false;
-let timerEditing = false;
-let forwardRunning = true;
-let subTimerRunning = false;
+// Function to switch play & pause button of main stop watch & secendary stop watch
+const switchPlayPauseBtn = (id, btn) =>
+  id.setAttribute(
+    "d",
+    btn == "play"
+      ? "M18.95 32.85 32.9 24l-13.95-8.9ZM24 45.05q-4.35 0-8.2-1.625-3.85-1.625-6.725-4.5Q6.2 36.05 4.575 32.2 2.95 28.35 2.95 24t1.625-8.2q1.625-3.85 4.5-6.725Q11.95 6.2 15.8 4.55q3.85-1.65 8.15-1.65 4.4 0 8.275 1.65t6.725 4.525q2.85 2.875 4.5 6.725 1.65 3.85 1.65 8.25 0 4.3-1.65 8.15-1.65 3.85-4.525 6.725-2.875 2.875-6.725 4.5-3.85 1.625-8.2 1.625Zm0-4.55q6.85 0 11.675-4.825Q40.5 30.85 40.5 24q0-6.85-4.825-11.675Q30.85 7.5 24 7.5q-6.85 0-11.675 4.825Q7.5 17.15 7.5 24q0 6.85 4.825 11.675Q17.15 40.5 24 40.5ZM24 24Z`"
+      : "M28.2 40.1V7.85h11.05V40.1Zm-19.45 0V7.85H19.8V40.1Z"
+  );
 
-// Function to switch play & pause button of main stop watch
-const switchPlayPauseBtn = (btn) => {
-  document.getElementById(
-    "start"
-  ).style.backgroundImage = `url(./images/${btn}.svg)`;
-};
-
-// Function to switch play & pause button of secendary stop watch
-const switchSubStopWatchPlayPauseBtn = (btn) => {
-  document.getElementById(
-    "sub-start"
-  ).style.backgroundImage = `url(./images/${btn}.svg)`;
-};
-
-// Function to disable reset button of main stop watch
-const disableResetBtn = (disable) => {
-  document.getElementById("reset").style.cursor = disable
-    ? "not-allowed"
-    : "pointer";
-};
-
-// Function to disable reset button of secendary stop watch
-const disableSubStopWatchResetBtn = (disable) => {
-  document.getElementById("sub-reset").style.cursor = disable
-    ? "not-allowed"
-    : "pointer";
-};
-
-// Function to disable start button of main stop watch
-const disableStartBtn = (disable) => {
-  document.getElementById("start").style.cursor = disable
-    ? "not-allowed"
-    : "pointer";
-};
-
-// Function to disable pause button of main stop watch
-const disableStopBtn = (disable) => {
-  document.getElementById("pause").style.cursor = disable
-    ? "not-allowed"
-    : "pointer";
-};
-
-// Function to disable add/edit button of main stop watch
-const disableAddBtn = (disable) => {
-  document.getElementById("add").style.cursor = disable
-    ? "not-allowed"
-    : "pointer";
-};
-
-const disableArrowBtn = (disable) => {
-  document.getElementById("up").style.cursor = disable
-    ? "not-allowed"
-    : "pointer";
-  document.getElementById("down").style.cursor = disable
-    ? "not-allowed"
-    : "pointer";
-};
+// Function to disable/enable buttons based on id
+const disableBtn = (id, value) =>
+  (id.style.cursor = value ? "not-allowed" : "pointer");
 
 // Function to enable forward timer of main stop watch
-const forwardTimer = () => {
-  if (!timerRunning) {
-    forwardRunning = true;
-    document.getElementById("up").style.backgroundColor = "white";
-    document.getElementById("down").style.backgroundColor =
-      "rgb(119, 115, 115)";
+const timerDirection = (status) => {
+  if (!start.value) {
+    up.value = status;
+    up.style.backgroundColor = status ? "white" : "rgb(119, 115, 115)";
+    down.style.backgroundColor = status ? "rgb(119, 115, 115)" : "white";
   }
 };
 
-// Function to enable backwad timer of main stop watch
-const backwardTimer = () => {
-  if (!timerRunning) {
-    forwardRunning = false;
-    document.getElementById("up").style.backgroundColor = "rgb(119, 115, 115)";
-    document.getElementById("down").style.backgroundColor = "white";
-  }
+// Function to display the alert messages for invalid entry
+const showAlert = (id, value) => {
+  id.style.outline = "2px solid red";
+  id.value = "00";
+  alert(`Invalid ${value}.`);
+  return false;
 };
 
 // Function to check for valid timer values of main stop watch
-const validateTime = (hour, minute, second, millisecond) => {
+const validateTime = (hour, minute, second, milisec) => {
   if (hour.value < 0 || hour.value >= 24 || hour.value == "") {
-    hour.style.outline = "2px solid red";
-    hour.value = "00";
-    alert("Invalid Hour.");
-    return false;
+    return showAlert(hour, "Hour");
   }
   hour.style.outline = "2px solid white";
   if (minute.value < 0 || minute.value >= 60 || minute.value == "") {
-    minute.style.outline = "2px solid red";
-    minute.value = "00";
-    alert("Invalid Minute.");
-    return false;
+    return showAlert(minute, "Minute");
   }
   minute.style.outline = "2px solid white";
   if (second.value < 0 || second.value >= 60 || second.value == "") {
-    second.style.outline = "2px solid red";
-    second.value = "00";
-    alert("Invalid Second.");
-    return false;
+    return showAlert(second, "Second");
   }
   second.style.outline = "2px solid white";
-  if (
-    millisecond.value < 0 ||
-    millisecond.value >= 100 ||
-    millisecond.value == ""
-  ) {
-    millisecond.style.outline = "2px solid red";
-    millisecond.value = "00";
-    alert("Invalid Millisecond.");
-    return false;
+  if (milisec.value < 0 || milisec.value >= 100 || milisec.value == "") {
+    return showAlert(milisec, "Millisecond");
   }
-  millisecond.style.outline = "2px solid white";
+  milisec.style.outline = "2px solid white";
   return true;
 };
 
 // Function to save the timer values of main stop watch
 const saveTimer = () => {
-  timerEditing = false;
-  disableStartBtn(false);
-  disableStopBtn(false);
-  // disableResetBtn(false);
-  let save = document.getElementById("add");
-  let hour = document.getElementById("hour");
-  let minute = document.getElementById("minute");
-  let second = document.getElementById("second");
-  let millisecond = document.getElementById("millisecond");
+  add.value = false;
+  disableBtn(start, false);
+  disableBtn(pause, false);
   if (validateTime(hour, minute, second, millisecond)) {
     hour.setAttribute("readonly", "readonly");
     minute.setAttribute("readonly", "readonly");
@@ -139,24 +64,22 @@ const saveTimer = () => {
       second.style.outline =
       millisecond.style.outline =
         "none";
-    save.style.backgroundImage = "url(./images/add.svg)";
-    save.onclick = addTimer;
-    save.title = "Set Time";
+    add.children[0].setAttribute(
+      "d",
+      "m39.65 14.95-6.3-6.25 1.95-2q.95-.95 2.325-.95 1.375 0 2.475 1l1.55 1.55q1.1 1.05.975 2.425Q42.5 12.1 41.55 13.05ZM37.6 17 12.25 42.35H6v-6.3L31.3 10.8Z"
+    );
+    add.onclick = addTimer;
+    add.children[1].textContent = "Set Time";
   }
 };
 
 // Function to edit the timer values of main stop watch
 const addTimer = () => {
-  if (!timerRunning) {
-    timerEditing = true;
-    disableStartBtn(true);
-    disableStopBtn(true);
-    disableResetBtn(false);
-    let add = document.getElementById("add");
-    let hour = document.getElementById("hour");
-    let minute = document.getElementById("minute");
-    let second = document.getElementById("second");
-    let millisecond = document.getElementById("millisecond");
+  if (!start.value) {
+    add.value = true;
+    disableBtn(start, true);
+    disableBtn(pause, true);
+    disableBtn(reset, false);
     hour.removeAttribute("readonly");
     minute.removeAttribute("readonly");
     second.removeAttribute("readonly");
@@ -166,40 +89,42 @@ const addTimer = () => {
       second.style.outline =
       millisecond.style.outline =
         "2px solid white";
-    add.style.backgroundImage = `url(./images/save.svg)`;
+    add.children[0].setAttribute(
+      "d",
+      "M18.9 36.75 6.65 24.5l3.3-3.3 8.95 9L38 11.1l3.3 3.25Z"
+    );
     add.onclick = saveTimer;
-    add.title = "Save Time";
+    add.children[1].textContent = "Save Time";
   }
 };
 
 // Function to start the main stop watch
-const startTimer = () => {
-  let hour = document.getElementById("hour");
-  let minute = document.getElementById("minute");
-  let second = document.getElementById("second");
-  let millisecond = document.getElementById("millisecond");
+const startTimer = (timerRunning) => {
   let h = Number(hour.value);
   let m = Number(minute.value);
   let s = Number(second.value);
   let ms = Number(millisecond.value);
-  if (!timerRunning && !timerEditing) {
-    if (!forwardRunning && !ms && !s && !m && !h) {
-      disableStartBtn(true);
-      return;
-    } else if (ms >= 99 && s >= 59 && m >= 59 && h >= 23) {
-      disableStartBtn(true);
+  if (!timerRunning && !add.value) {
+    if (up.value === undefined) up.value = true;
+    else if (
+      (!up.value && !ms && !s && !m && !h) ||
+      (up.value && ms >= 99 && s >= 59 && m >= 59 && h >= 23)
+    ) {
+      disableBtn(start, true);
       return;
     }
-    timerRunning = true;
-    switchPlayPauseBtn("pause");
-    disableStartBtn(false);
-    disableStopBtn(false);
-    disableResetBtn(false);
-    disableArrowBtn(true);
-    disableAddBtn(true);
-    start.title = "Pause";
-    timer = setInterval(() => {
-      if (forwardRunning) {
+    start.value = true;
+    switchPlayPauseBtn(start.children[0], "pause");
+    disableBtn(start, false);
+    disableBtn(pause, false);
+    disableBtn(reset, false);
+    disableBtn(up, true);
+    disableBtn(down, true);
+    disableBtn(add, true);
+    // Updating the title
+    start.children[1].textContent = "Pause";
+    start.timer = setInterval(() => {
+      if (up.value) {
         ms++;
         if (ms >= 99 && s >= 59 && m >= 59 && h >= 23) pauseTimer();
         else if (ms > 99 || ms < 0) {
@@ -219,8 +144,9 @@ const startTimer = () => {
         }
       } else {
         ms--;
-        if (!ms && !s && !m && !h) pauseTimer();
-        else if (ms < 0 || ms > 99) {
+        if (!ms && !s && !m && !h) {
+          pauseTimer();
+        } else if (ms < 0 || ms > 99) {
           ms = 99;
           s--;
           if (s < 0 || s > 59) {
@@ -246,59 +172,49 @@ const startTimer = () => {
 
 // Function to pause the main stop watch
 const pauseTimer = () => {
-  if (!timerEditing) {
-    clearInterval(timer);
-    switchPlayPauseBtn("play");
-    disableStopBtn(true);
-    disableAddBtn(false);
-    disableArrowBtn(false);
-    start.title = "Start";
-    timerRunning = false;
+  if (!add.value) {
+    clearInterval(start.timer);
+    switchPlayPauseBtn(start.children[0], "play");
+    disableBtn(pause, true);
+    disableBtn(add, false);
+    disableBtn(up, false);
+    disableBtn(down, false);
+    start.children[1].textContent = "Start";
+    start.value = false;
   }
 };
 
 // Function to reset the main stop watch
 const resetTimer = () => {
-  clearInterval(timer);
-  switchPlayPauseBtn("play");
-  timerRunning = false;
-  disableStopBtn(true);
-  disableResetBtn(true);
-  if (timerEditing) disableResetBtn(false);
-  disableAddBtn(false);
+  start.value = false;
+  clearInterval(start.timer);
+  switchPlayPauseBtn(start.children[0], "play");
+  disableBtn(add, false);
+  disableBtn(pause, true);
+  disableBtn(reset, true);
+  if (add.value) disableBtn(reset, false);
   hour.value = minute.value = second.value = millisecond.value = "00";
 };
 
-// Function to display the secendary stop watch
-const showSubTimer = () => {
-  document.getElementById("circle").style.display = "none";
-  document.getElementById("sub-watch-screen").style.display = "flex";
-  document.getElementById("sub-watch-control").style.display = "flex";
-  document.getElementById("close").style.display = "flex";
-};
-
-// Function to hide the secendary stop waatch
-const hideSubTimer = () => {
-  document.getElementById("circle").style.display = "flex";
-  document.getElementById("sub-watch-screen").style.display = "none";
-  document.getElementById("sub-watch-control").style.display = "none";
-  document.getElementById("close").style.display = "none";
+// Function to display/hide the secendary stop watch
+const showOrHideSubTimer = (show1, show2) => {
+  document.getElementById("open").style.display = show1;
+  window["sub-watch-screen"].style.display = show2;
+  window["sub-watch-control"].style.display = show2;
+  document.getElementById("close").style.display = show2;
 };
 
 // Function to start the secendary stop watch
-const startSubTimer = () => {
+const startSubTimer = (subTimerRunning) => {
   if (!subTimerRunning) {
-    subTimerRunning = true;
-    switchSubStopWatchPlayPauseBtn("pause");
-    disableSubStopWatchResetBtn(false);
-    document.getElementById("sub-start").title = "Pause";
-    let hour = document.getElementById("sub-hour");
-    let minute = document.getElementById("sub-minute");
-    let second = document.getElementById("sub-second");
-    let h = Number(hour.value);
-    let m = Number(minute.value);
-    let s = Number(second.value);
-    subTimer = setInterval(() => {
+    window["sub-start"].value = true;
+    switchPlayPauseBtn(window["sub-start-svg"], "pause");
+    disableBtn(window["sub-reset"], false);
+    window["sub-start"].children[1].textContent = "Pause";
+    let h = Number(window["sub-hour"].value);
+    let m = Number(window["sub-minute"].value);
+    let s = Number(window["sub-second"].value);
+    window["sub-start"].subTimer = setInterval(() => {
       s++;
       if (s > 59 || s < 0) {
         m++;
@@ -311,29 +227,29 @@ const startSubTimer = () => {
           h %= 24;
         }
       }
-      hour.value = h < 10 ? "0" + h : h;
-      minute.value = m < 10 ? "0" + m : m;
-      second.value = s < 10 ? "0" + s : s;
+      window["sub-hour"].value = h < 10 ? "0" + h : h;
+      window["sub-minute"].value = m < 10 ? "0" + m : m;
+      window["sub-second"].value = s < 10 ? "0" + s : s;
     }, 1000);
-  } else pauseSubTimer();
+  } else pauseSubTimer(window["sub-start"].subTimer);
 };
 
 // Function to pause the secendary stop watch
 const pauseSubTimer = () => {
-  clearInterval(subTimer);
-  switchSubStopWatchPlayPauseBtn("play");
-  document.getElementById("sub-start").title = "Start";
-  subTimerRunning = false;
+  clearInterval(window["sub-start"].subTimer);
+  switchPlayPauseBtn(window["sub-start-svg"], "play");
+  window["sub-start"].children[1].textContent = "Start";
+  window["sub-start"].value = false;
 };
 
 // Function to reset the secendary stop watch
 const resetSubTimer = () => {
-  subTimerRunning = false;
-  clearInterval(subTimer);
-  disableSubStopWatchResetBtn(true);
-  switchSubStopWatchPlayPauseBtn("play");
-  let hour = document.getElementById("sub-hour");
-  let minute = document.getElementById("sub-minute");
-  let second = document.getElementById("sub-second");
-  hour.value = minute.value = second.value = "00";
+  window["sub-start"].value = false;
+  clearInterval(window["sub-start"].subTimer);
+  disableBtn(window["sub-reset"], true);
+  switchPlayPauseBtn(window["sub-start-svg"], "play");
+  window["sub-hour"].value =
+    window["sub-minute"].value =
+    window["sub-second"].value =
+      "00";
 };
