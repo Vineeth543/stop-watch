@@ -1,25 +1,24 @@
 /******************* Importing google fonts *******************/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap&family=Pacifico&display=swap");
 * {
   margin: 0;
   padding: 0;
+  font-family: "Poppins", "sans-serif";
 }
 
 /******************* Remove Scroll-bar from number input tag *******************/
-input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+  appearance: none;
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: url("./images/watch.webp");
   height: 100vh;
   background-position: center;
   background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .logo-container {
@@ -47,23 +46,23 @@ body {
 
 /******************* Main Stop Watch *******************/
 .stop-watch-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: linear-gradient(
     rgba(88, 72, 72, 0.72) 0%,
     rgba(62, 51, 51, 0.45) 100%
   );
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 30px;
   border-radius: 7px;
 }
 
 .stop-watch-screen {
   display: flex;
-  gap: 10px;
-  justify-content: center;
   align-items: center;
-  margin-bottom: 25px;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
   color: white;
 }
 
@@ -73,7 +72,6 @@ body {
   align-items: center;
   gap: 15px;
   font-size: 35px;
-  font-family: "Poppins", "sans-serif";
 }
 
 .stop-watch-colon {
@@ -81,24 +79,12 @@ body {
   padding-top: 28px;
 }
 
-.stop-watch-direction {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin: 45px 0 0 20px;
-}
-
 .stop-watch-display {
   background-color: transparent;
   outline: none;
   border: none;
   width: 120px;
-  display: flex;
-  justify-content: center;
   font-size: 100px;
-  font-family: "Poppins", sans-serif;
   box-shadow: 10px 10px 8px 10px rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
@@ -108,23 +94,40 @@ body {
 
 .stop-watch-controls {
   display: flex;
-  gap: 40px;
+  gap: 60px;
 }
 
 .stop-watch-button {
-  width: 60px;
-  height: 60px;
+  width: 48px;
+  height: 48px;
   background: white;
   border: none;
   border-radius: 5px;
+  transform: scale(1.3);
+}
+
+#start,
+#add {
+  cursor: pointer;
+}
+
+#pause,
+#reset {
+  cursor: not-allowed;
+}
+
+.stop-watch-direction {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 45px 0 0 20px;
 }
 
 .stop-watch-direction-button {
-  width: 30px;
-  height: 30px;
+  height: 48px;
+  width: 48px;
   background: rgb(119, 115, 115);
   border-radius: 5px;
-  border: none;
   cursor: pointer;
 }
 
@@ -132,26 +135,28 @@ body {
   background: white;
 }
 
+#down {
+  transform: rotate(180deg);
+}
+
 /******************* Sub Stop Watch *******************/
 .sub-stop-watch-container {
   display: flex;
   gap: 25px;
-  justify-content: center;
   margin-top: 20px;
 }
 
 .sub-stop-watch {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 250px;
+  width: 300px;
   background: linear-gradient(
     rgba(88, 72, 72, 0.72) 0%,
     rgba(62, 51, 51, 0.45) 100%
   );
-  height: 250px;
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   border-radius: 7px;
 }
 
@@ -159,7 +164,6 @@ body {
   display: none;
   gap: 10px;
   justify-content: center;
-  align-items: center;
   border-radius: 2px;
   padding-bottom: 20px;
   color: white;
@@ -170,13 +174,12 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 7px;
-  font-size: 35px;
-  font-family: "Poppins", sans-serif;
+  font-size: 25px;
 }
 
 .sub-stop-watch-colon {
   font-size: 30px;
-  padding-top: 30px;
+  padding-top: 40px;
 }
 
 .sub-stop-watch-display {
@@ -184,12 +187,7 @@ body {
   outline: none;
   border: none;
   width: 40px;
-  display: flex;
-  justify-content: center;
   font-size: 30px;
-  font-family: "Poppins", sans-serif;
-  box-shadow: 10px 10px 8px 10px rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
   padding: 0 10px;
   color: white;
@@ -201,91 +199,32 @@ body {
   gap: 20px;
 }
 
-.sub-stop-watch-button {
-  width: 40px;
-  height: 40px;
-  background: white;
-  border: none;
-  border-radius: 5px;
-}
-
-#start {
-  background-image: url("./images/play.svg");
-  background-position: center;
-  background-size: cover;
-  cursor: pointer;
-}
-
-#pause {
-  background-image: url("./images/stop.svg");
-  background-position: center;
-  background-size: cover;
-  cursor: not-allowed;
-}
-
-#reset {
-  background-image: url("./images/reset.svg");
-  background-position: center;
-  background-size: cover;
-  cursor: not-allowed;
-}
-
-#add {
-  background-image: url("./images/add.svg");
-  background-position: center;
-  background-size: cover;
-  cursor: pointer;
-}
-
-#up {
-  background-image: url("./images/arrow.svg");
-  background-position: center;
-  background-size: cover;
-}
-
-#down {
-  background-image: url("./images/arrow.svg");
-  background-position: center;
-  background-size: cover;
-  transform: rotate(180deg);
-}
-
-#circle {
-  height: 150px;
-  width: 150px;
-  background-image: url("./images/circle.svg");
-  background-position: center;
-  background-size: cover;
-  background-color: transparent;
-  border: none;
+#open {
+  position: absolute;
+  top: 80px;
+  left: 100px;
   cursor: pointer;
 }
 
 #close {
   display: none;
   position: absolute;
-  top: 10px;
-  right: 10px;
-  height: 40px;
-  width: 40px;
-  background-image: url("./images/close.svg");
-  background-position: center;
-  background-size: cover;
-  background-color: transparent;
-  border: none;
+  top: 5px;
+  left: 245px;
   cursor: pointer;
 }
 
+.sub-stop-watch-button {
+  width: 48px;
+  height: 48px;
+  background: white;
+  border-radius: 5px;
+}
+
 #sub-start {
-  background-image: url("./images/play.svg");
-  background-position: center;
-  background-size: cover;
   cursor: pointer;
 }
 
 #sub-reset {
-  background-image: url("./images/reset.svg");
-  background-position: center;
-  background-size: cover;
   cursor: not-allowed;
 }
