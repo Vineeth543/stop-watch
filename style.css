@@ -17,35 +17,31 @@ body {
   align-items: center;
   background: url("./images/watch.webp");
   height: 100vh;
+  width: 100%;
   background-position: center;
   background-size: cover;
 }
 
-.logo-container {
-  height: 200px;
-  width: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-  position: absolute;
-  left: 50px;
-  top: 50px;
-}
-
 .logo {
-  width: 100%;
-  height: 100%;
+  width: 10%;
+  position: absolute;
+  border-radius: 50%;
+  left: 5%;
+  top: 5%;
 }
 
 .heading {
+  text-align: center;
   color: white;
   font-family: "Pacifico";
-  font-size: 90px;
+  font-size: 5rem;
   margin-top: 2%;
   margin-bottom: 2%;
 }
 
 /******************* Main Stop Watch *******************/
 .stop-watch-container {
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,8 +56,6 @@ body {
 .stop-watch-screen {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
   margin-bottom: 30px;
   color: white;
 }
@@ -83,12 +77,12 @@ body {
   background-color: transparent;
   outline: none;
   border: none;
-  width: 120px;
-  font-size: 100px;
+  width: 65%;
+  font-size: 75px;
   box-shadow: 10px 10px 8px 10px rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
-  padding: 0 30px;
+  text-align: center;
   color: white;
 }
 
@@ -119,8 +113,7 @@ body {
 .stop-watch-direction {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin: 45px 0 0 20px;
+  margin-top: 51px;
 }
 
 .stop-watch-direction-button {
@@ -133,31 +126,38 @@ body {
 
 #up {
   background: white;
+  transform: scale(0.6);
 }
 
 #down {
-  transform: rotate(180deg);
+  transform: scale(0.6) rotate(180deg);
 }
 
 /******************* Sub Stop Watch *******************/
 .sub-stop-watch-container {
+  width: 64%;
   display: flex;
-  gap: 25px;
-  margin-top: 20px;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 25px;
 }
 
-.sub-stop-watch {
+.sub-stop-watch,
+.stop-watch-history,
+.current-date {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  text-align: center;
   height: 250px;
-  width: 300px;
+  width: 34%;
+  font-size: 25px;
   background: linear-gradient(
     rgba(88, 72, 72, 0.72) 0%,
     rgba(62, 51, 51, 0.45) 100%
   );
   border-radius: 7px;
+  color: white;
 }
 
 .sub-stop-watch-screen {
@@ -165,8 +165,9 @@ body {
   gap: 10px;
   justify-content: center;
   border-radius: 2px;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
   color: white;
+  margin-top: 60px;
 }
 
 .sub-stop-watch-digit {
@@ -179,7 +180,7 @@ body {
 
 .sub-stop-watch-colon {
   font-size: 30px;
-  padding-top: 40px;
+  margin-top: 28px;
 }
 
 .sub-stop-watch-display {
@@ -189,7 +190,7 @@ body {
   width: 40px;
   font-size: 30px;
   border-radius: 5px;
-  padding: 0 10px;
+  text-align: center;
   color: white;
 }
 
@@ -201,8 +202,8 @@ body {
 
 #open {
   position: absolute;
-  top: 80px;
-  left: 100px;
+  top: 60px;
+  left: 36%;
   cursor: pointer;
 }
 
@@ -210,7 +211,7 @@ body {
   display: none;
   position: absolute;
   top: 5px;
-  left: 245px;
+  left: 80%;
   cursor: pointer;
 }
 
@@ -227,4 +228,166 @@ body {
 
 #sub-reset {
   cursor: not-allowed;
+}
+
+/******************* Stop Watch History *******************/
+
+.stop-watch-history-data {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 50px;
+  overflow: scroll;
+}
+
+.delete-icon,
+.info-icon {
+  height: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+.history-heading {
+  position: fixed;
+  right: 24%;
+}
+
+/******************* Current Date & Time *******************/
+
+#current-date {
+  margin-top: 30px;
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 13%;
+  }
+  .stop-watch-container {
+    width: 83%;
+  }
+  .sub-stop-watch-container {
+    margin-top: 0;
+  }
+  .stop-watch-screen{
+    margin: 0;
+  }
+  .stop-watch-display,
+  .stop-watch-digit {
+    font-size: 25px;
+  }
+  .stop-watch-controls {
+    gap: 20px;
+  }
+  .sub-stop-watch,
+  .stop-watch-history,
+  .current-date {
+    margin-top: 75px;
+    transform: scale(1.4);
+  }
+  .history-heading {
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+    top: 3%;
+  }
+  .heading {
+    font-size: 3rem;
+  }
+  .stop-watch-container {
+    height: 30%;
+  }
+  .stop-watch-display {
+    font-size: 50px;
+  }
+  .sub-stop-watch-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  .sub-stop-watch,
+  .stop-watch-history,
+  .current-date {
+    width: 103%;
+  }
+  .current-date {
+    justify-content: center;
+  }
+  .history-heading {
+    position: absolute;
+    left: 42%;
+  }
+  #open {
+    top: 25px;
+    left: 36%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .stop-watch-container {
+    height: 30%;
+  }
+  .stop-watch-display {
+    font-size: 40px;
+  }
+  .stop-watch-button {
+    transform: scale(1);
+  }
+  .stop-watch-direction {
+    margin-top: 48px;
+  }
+  #up {
+    transform: scale(0.5);
+  }
+  #down {
+    transform: scale(0.5) rotate(180deg);
+  }
+  .sub-stop-watch-container {
+    width: 66%;
+  }
+  .sub-stop-watch-screen {
+    margin-top: 50px;
+    margin-bottom: 0px;
+  }
+  .sub-stop-watch-digit {
+    font-size: 25px;
+  }
+  .sub-stop-watch-display {
+    width: 30px;
+    font-size: 25px;
+  }
+  #close {
+    top: 0px;
+  }
+  #sub-start,
+  #sub-reset {
+    transform: scale(0.8);
+  }
+  .sub-stop-watch,
+  .stop-watch-history,
+  .current-date {
+    height: 200px;
+  }
+  .stop-watch-history-data {
+    font-size: 22px;
+  }
+  .date-heading,
+  .history-heading {
+    font-size: 30px;
+  }
+  .history-heading {
+    right: 230px;
+  }
+  #current-date,
+  #current-time {
+    font-size: 20px;
+  }
 }
