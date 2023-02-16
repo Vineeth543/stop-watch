@@ -28,18 +28,52 @@ const showAlert = (id, value) => {
   return false;
 };
 
+const getTimerHistory = () => {
+  let data = JSON.parse(localStorage.timerData);
+  if (data) {
+    let history = document.getElementById("history");
+    history.innerHTML = "";
+    data.forEach((element, index) => {
+      history.innerHTML += `<p>${index + 1}. ${element.slice(
+        0,
+        12
+      )}<img src='./images/info.png' class='delete-icon' title="${element.slice(
+        12
+      )}" onclick='alert("${element.slice(
+        12
+      )}")' /><img src='./images/delete.png' class='info-icon' onclick='deleteHistory(${index})' /></p>`;
+    });
+  }
+  getDateAndTime();
+};
+
+const deleteHistory = (index) => {
+  let timerHistory = JSON.parse(localStorage.timerData);
+  timerHistory.splice(index, 1);
+  localStorage.setItem("timerData", JSON.stringify(timerHistory));
+  getTimerHistory();
+};
+
 // Function to check for valid timer values of main stop watch
 const validateTime = (hour, minute, second, milisec) => {
-  if (hour.value < 0 || hour.value >= 24 || hour.value == "") {
+  if (hour.value < 0 || hour.value >= 100 || hour.value == "") {
     return showAlert(hour, "Hour");
   }
   hour.style.outline = "2px solid white";
-  if (minute.value < 0 || minute.value >= 60 || minute.value == "") {
+  if (minute.value < 0 || minute.value >= 100 || minute.value == "") {
     return showAlert(minute, "Minute");
+  } else if (minute.value >= 60) {
+    hour.value++;
+    hour.value = hour.value < 10 ? "0" + hour.value : hour.value;
+    minute.value %= 60;
   }
   minute.style.outline = "2px solid white";
-  if (second.value < 0 || second.value >= 60 || second.value == "") {
+  if (second.value < 0 || second.value >= 100 || second.value == "") {
     return showAlert(second, "Second");
+  } else if (second.value >= 60) {
+    minute.value++;
+    minute.value = minute.value < 10 ? "0" + minute.value : minute.value;
+    second.value %= 60;
   }
   second.style.outline = "2px solid white";
   if (milisec.value < 0 || milisec.value >= 100 || milisec.value == "") {
@@ -51,6 +85,7 @@ const validateTime = (hour, minute, second, milisec) => {
 
 // Function to save the timer values of main stop watch
 const saveTimer = () => {
+  let day = new Date();
   add.value = false;
   disableBtn(start, false);
   disableBtn(pause, false);
@@ -70,6 +105,16 @@ const saveTimer = () => {
     );
     add.onclick = addTimer;
     add.children[1].textContent = "Set Time";
+    let timerHistory = localStorage.timerData
+      ? JSON.parse(localStorage.timerData)
+      : [];
+    timerHistory.unshift(
+      `${hour.value} : ${minute.value} : ${second.value} ${day
+        .toString()
+        .slice(0, 15)}${day.toString().slice(15, 24)}`
+    );
+    localStorage.setItem("timerData", JSON.stringify(timerHistory));
+    getTimerHistory();
   }
 };
 
@@ -202,6 +247,15 @@ const showOrHideSubTimer = (show1, show2) => {
   window["sub-watch-screen"].style.display = show2;
   window["sub-watch-control"].style.display = show2;
   document.getElementById("close").style.display = show2;
+  if (show2) setTimerToZero();
+};
+
+const setTimerToZero = () => {
+  clearInterval(window["sub-start"].subTimer);
+  window["sub-hour"].value =
+    window["sub-minute"].value =
+    window["sub-second"].value =
+      "00";
 };
 
 // Function to start the secendary stop watch
@@ -245,11 +299,19 @@ const pauseSubTimer = () => {
 // Function to reset the secendary stop watch
 const resetSubTimer = () => {
   window["sub-start"].value = false;
-  clearInterval(window["sub-start"].subTimer);
   disableBtn(window["sub-reset"], true);
   switchPlayPauseBtn(window["sub-start-svg"], "play");
-  window["sub-hour"].value =
-    window["sub-minute"].value =
-    window["sub-second"].value =
-      "00";
+  setTimerToZero();
 };
+
+const getDateAndTime = () => {
+  let day = new Date();
+  document.getElementById("current-date").innerHTML = day
+    .toString()
+    .slice(0, 15);
+  document.getElementById("current-time").innerHTML = day
+    .toString()
+    .slice(15, 24);
+};
+
+setInterval(getDateAndTime, 1000);
